@@ -1,0 +1,96 @@
+// Fonte única de verdade: preços, limites e links. Nenhum componente deve
+// repetir estes valores.
+
+export const SITE = {
+  nome: 'Senderix',
+  titulo: 'Senderix — Automação de atendimento para WhatsApp',
+  descricao:
+    'Automatize o atendimento no WhatsApp com menus, respostas automáticas e transferência para atendente. Dispare campanhas com fluxo próprio. Veja os planos.',
+  url: 'https://senderix.com.br', // TODO: confirmar domínio final
+}
+
+export const WHATSAPP_CONTATO = 'https://wa.me/55XXXXXXXXXXX' // TODO: Pedro preenche
+const WHATSAPP_MENSAGEM = 'Olá! Quero saber mais sobre o Senderix'
+
+export const WHATSAPP_LINK = `${WHATSAPP_CONTATO}?text=${encodeURIComponent(WHATSAPP_MENSAGEM)}`
+
+export const RECURSOS_BASE = [
+  'Fluxos com menus e respostas automáticas',
+  'Boas-vindas automática e por palavra-chave',
+  'Transferência para atendente humano',
+  'Campanhas com fluxo de resposta próprio',
+  'Editor visual de fluxos',
+  'Contatos e relatórios',
+] as const
+
+export type Plano = {
+  id: string
+  nome: string
+  /** null = sob consulta */
+  preco: number | null
+  numeros: number | string
+  /** null = ilimitado */
+  fluxos: number | null
+  /** null = usa WHATSAPP_LINK */
+  checkout: string | null
+  destaque: boolean
+  frase: string
+  cta: string
+  extras: string[]
+}
+
+export const PLANOS: Plano[] = [
+  {
+    id: 'silver',
+    nome: 'Silver',
+    preco: 339.9,
+    numeros: 1,
+    fluxos: 3,
+    checkout: 'TODO_LINK_ABACATEPAY_SILVER',
+    destaque: false,
+    frase: 'Automatize sua recepção e suas principais campanhas',
+    cta: 'Assinar Silver',
+    extras: [],
+  },
+  {
+    id: 'gold',
+    nome: 'Gold',
+    preco: 549.9,
+    numeros: 3,
+    fluxos: 10,
+    checkout: 'TODO_LINK_ABACATEPAY_GOLD',
+    destaque: true,
+    frase: 'Cada campanha com o próprio atendimento automático',
+    cta: 'Assinar Gold',
+    extras: ['Separe o número de atendimento do número de campanhas'],
+  },
+  {
+    id: 'platinum',
+    nome: 'Platinum',
+    preco: 799.9,
+    numeros: 5,
+    fluxos: null,
+    checkout: 'TODO_LINK_ABACATEPAY_PLATINUM',
+    destaque: false,
+    frase: 'Toda a sua operação no WhatsApp no piloto automático',
+    cta: 'Assinar Platinum',
+    extras: [
+      'Separe o número de atendimento do número de campanhas',
+      'Números reserva para não parar se um for restringido',
+    ],
+  },
+  {
+    id: 'enterprise',
+    nome: 'Enterprise',
+    preco: null,
+    numeros: '6 ou mais',
+    fluxos: null,
+    checkout: null,
+    destaque: false,
+    frase: 'Para operações com muitos números e atendimento próximo',
+    cta: 'Falar com a gente',
+    extras: ['Suporte prioritário', 'Ajuda para montar os seus fluxos'],
+  },
+]
+
+export const isPendente = (link: string) => link.startsWith('TODO')
