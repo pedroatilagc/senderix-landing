@@ -9,18 +9,17 @@ export const SITE = {
   url: 'https://senderix.com.br', // TODO: confirmar domínio final
 }
 
-export const WHATSAPP_CONTATO = 'https://wa.me/55XXXXXXXXXXX' // TODO: Pedro preenche
-const WHATSAPP_MENSAGEM = 'Olá! Quero saber mais sobre o Senderix'
-
-export const WHATSAPP_LINK = `${WHATSAPP_CONTATO}?text=${encodeURIComponent(WHATSAPP_MENSAGEM)}`
+// Link curto do WhatsApp usado em todos os "Falar com a gente"
+export const WHATSAPP_LINK = 'https://w.app/senderix'
 
 export const RECURSOS_BASE = [
   'Fluxos com menus e respostas automáticas',
   'Boas-vindas automática e por palavra-chave',
   'Transferência para atendente humano',
   'Campanhas com fluxo de resposta próprio',
-  'Editor visual de fluxos',
-  'Contatos e relatórios',
+  'Lista de contatos e relatórios',
+  'Suporte humano, do jeito que você precisar',
+  'Ajuda para montar os seus fluxos',
 ] as const
 
 export type Plano = {
@@ -101,7 +100,7 @@ export const PLANOS: Plano[] = [
     selo: 'Para grandes operações',
     frase: 'Para operações com muitos números e atendimento próximo',
     cta: 'Falar com a gente',
-    extras: ['Suporte prioritário', 'Ajuda para montar os seus fluxos'],
+    extras: ['Implantação feita por nós', 'Faturamento flexível'],
   },
 ]
 
