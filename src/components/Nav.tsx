@@ -24,7 +24,7 @@ export function Nav() {
         className="mx-auto flex h-16 max-w-[1168px] items-center justify-between px-4 sm:px-6"
       >
         <a href="#topo" className="-m-1 p-1" aria-label="Senderix, voltar ao início">
-          <Logo height={26} preload />
+          <Logo height={32} className="h-[26px] w-auto md:h-8" preload />
         </a>
         <div className="flex items-center gap-6">
           <a

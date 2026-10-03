@@ -21,6 +21,7 @@
   --accent-tint-solid: #eff4fe;
   --on-accent: #ffffff;
   --whatsapp: #25d366;
+  --tab-shade: rgb(20 33 50 / 0.12);
   color-scheme: light;
 }
 
@@ -38,6 +39,7 @@
     --accent-text: #60a5fa;
     --accent-tint: rgb(96 165 250 / 0.1);
     --accent-tint-solid: #121e30;
+    --tab-shade: rgb(0 0 0 / 0.5);
     color-scheme: dark;
   }
 }
@@ -171,6 +173,11 @@ body {
   }
 }
 
+/* Aba atrás do cartão: sombra do cartão escurece a base da parte visível (28px) */
+.card-tab {
+  background-image: linear-gradient(to bottom, transparent 20px, var(--tab-shade) 28px);
+}
+
 /* ---------- Ilustração do hero ---------- */
 
 .reveal {
@@ -213,6 +220,31 @@ body {
   transition-timing-function: var(--ease-in-out-strong);
 }
 
+/* Nó esperando algo (ex.: "Aguardando resposta"): anel suave que se expande */
+.flow-node[data-pulse="true"] {
+  animation: no-pulso 1.4s ease-out infinite;
+}
+
+@keyframes no-pulso {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 0%, transparent);
+  }
+}
+
+/* Linha descritiva do seletor de cenário */
+.fade-in {
+  animation: fade-in 150ms ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
 .typing span {
   animation: typing 1s ease-in-out infinite;
 }
@@ -243,7 +275,9 @@ body {
   .flow-trail[data-on="true"] {
     transition: none;
   }
-  .typing span {
+  .typing span,
+  .flow-node[data-pulse="true"],
+  .fade-in {
     animation: none;
   }
 }

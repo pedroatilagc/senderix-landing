@@ -5,6 +5,10 @@ const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' 
 
 const rotuloFluxos = (f: Plano['fluxos']) => (f === null ? 'Ilimitados' : String(f))
 
+// Rótulo e valor juntos leem: "Computadores: Até 2" (curto para não quebrar linha no cartão)
+const rotuloComputadores = (n: Plano['computadores']) => (n === 1 ? 'Computador' : 'Computadores')
+const valorComputadores = (n: Plano['computadores']) => (n === null ? 'Sob medida' : `Até ${n}`)
+
 function Cta({ plano }: { plano: Plano }) {
   const href = plano.checkout ?? WHATSAPP_LINK
   const classe = plano.destaque ? 'btn btn-primary w-full' : 'btn btn-outline w-full'
@@ -32,13 +36,23 @@ function Cta({ plano }: { plano: Plano }) {
 }
 
 function Cartao({ plano }: { plano: Plano }) {
+  // Selo fora do destaque vira aba presa atrás da borda superior do cartão
+  const temAba = Boolean(plano.selo) && !plano.destaque
+
   return (
     <article
       aria-labelledby={`plano-${plano.id}`}
-      className={`row-span-6 grid grid-rows-subgrid gap-0 rounded-xl border p-6 ${
+      className={`relative row-span-6 grid grid-rows-subgrid gap-0 rounded-xl border p-6 ${
         plano.destaque ? 'border-accent' : 'border-line'
-      }`}
+      } ${temAba ? 'max-md:mt-10' : ''}`}
     >
+      {temAba && (
+        // Aba "atrás da folha": 28px visíveis acima do cartão e 10px escondidos sob ele.
+        // z negativo funciona porque a grade tem `isolate`; o cartão tem fundo opaco.
+        <span className="card-tab absolute -top-7 left-3 -z-10 flex h-[38px] items-start rounded-t-xl border border-b-0 border-line bg-subtle px-3 text-[12px] font-medium whitespace-nowrap text-muted">
+          <span className="flex h-7 items-center">{plano.selo}</span>
+        </span>
+      )}
       <div className="flex items-center justify-between gap-3">
         <h3
           id={`plano-${plano.id}`}
@@ -48,9 +62,9 @@ function Cartao({ plano }: { plano: Plano }) {
         >
           {plano.nome}
         </h3>
-        {plano.destaque && (
+        {plano.selo && plano.destaque && (
           <span className="rounded-full bg-accent-tint px-2 py-0.5 text-[12px] font-medium text-accent-text">
-            Recomendado
+            {plano.selo}
           </span>
         )}
       </div>
@@ -76,12 +90,18 @@ function Cartao({ plano }: { plano: Plano }) {
 
       <dl className="mt-6 divide-y divide-line border-y border-line text-[14px]">
         <div className="flex items-center justify-between py-2.5">
-          <dt className="pr-3 text-muted">WhatsApps conectados</dt>
+          <dt className="pr-3 text-accent-text">WhatsApps conectados</dt>
           <dd className="font-mono text-[13px] whitespace-nowrap text-fg-strong">{plano.numeros}</dd>
         </div>
         <div className="flex items-center justify-between py-2.5">
-          <dt className="pr-3 text-muted">Fluxos ativos</dt>
+          <dt className="pr-3 text-accent-text">Fluxos ativos</dt>
           <dd className="font-mono text-[13px] whitespace-nowrap text-fg-strong">{rotuloFluxos(plano.fluxos)}</dd>
+        </div>
+        <div className="flex items-center justify-between py-2.5">
+          <dt className="pr-3 text-accent-text">{rotuloComputadores(plano.computadores)}</dt>
+          <dd className="font-mono text-[13px] whitespace-nowrap text-fg-strong">
+            {valorComputadores(plano.computadores)}
+          </dd>
         </div>
       </dl>
 
@@ -117,7 +137,9 @@ export function Pricing() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-x-4 gap-y-0 md:grid-cols-2 lg:grid-cols-4 [&>article]:mb-4 [&>article]:bg-bg lg:[&>article]:mb-0">
+        {/* No 2×2 a segunda linha desce junto, para a aba do Enterprise não encostar no Gold
+            sem desalinhar o Platinum ao lado */}
+        <div className="isolate mt-14 grid gap-x-4 gap-y-0 md:grid-cols-2 lg:grid-cols-4 [&>article]:mb-4 [&>article]:bg-bg md:max-lg:[&>article:nth-child(n+3)]:mt-6 lg:[&>article]:mb-0">
           {PLANOS.map((p) => (
             <Cartao key={p.id} plano={p} />
           ))}
@@ -125,6 +147,7 @@ export function Pricing() {
 
         <div className="mt-8 space-y-1.5 text-[14px] text-muted">
           <p>Crie quantos fluxos quiser. O limite vale apenas para fluxos ativos ao mesmo tempo.</p>
+          <p>Troque de computador quando quiser: é só desconectar o antigo.</p>
           <p>
             Precisa de mais um número?{' '}
             <a
