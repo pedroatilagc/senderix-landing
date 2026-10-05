@@ -1,5 +1,5 @@
 import { IconArrowRight } from '@tabler/icons-react'
-import { WHATSAPP_LINK } from '@/config/site'
+import { AGENDAMENTO_URL } from '@/config/site'
 import { FlowIllustration } from './FlowIllustration'
 
 export function Hero() {
@@ -21,8 +21,8 @@ export function Hero() {
             <a href="#planos" className="btn btn-primary">
               Ver planos
             </a>
-            <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="link-arrow text-[15px]">
-              Falar com a gente
+            <a href={AGENDAMENTO_URL} target="_blank" rel="noopener noreferrer" className="link-arrow text-[15px]">
+              Agende uma demonstração
               <IconArrowRight size={16} stroke={2} aria-hidden="true" />
             </a>
           </div>

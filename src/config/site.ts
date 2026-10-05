@@ -12,6 +12,13 @@ export const SITE = {
 // Link curto do WhatsApp usado em todos os "Falar com a gente"
 export const WHATSAPP_LINK = 'https://w.app/senderix'
 
+// Contato direto exibido no rodapé
+export const WHATSAPP_NUMERO_EXIBICAO = '(11) 94543-7697'
+export const WHATSAPP_CONTATO = 'https://wa.me/5511945437697'
+
+// Agendamento de demonstração (CTA secundário do hero)
+export const AGENDAMENTO_URL = 'https://cal.com/senderix/30min?overlayCalendar=true'
+
 export const RECURSOS_BASE = [
   'Fluxos com menus e respostas automáticas',
   'Boas-vindas automática e por palavra-chave',

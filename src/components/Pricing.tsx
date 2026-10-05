@@ -1,4 +1,4 @@
-import { IconCheck } from '@tabler/icons-react'
+import { IconCheck, IconInfoCircle } from '@tabler/icons-react'
 import { PLANOS, RECURSOS_BASE, WHATSAPP_LINK, isPendente, type Plano } from '@/config/site'
 
 const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -133,7 +133,12 @@ export function Pricing() {
             Planos simples, sem surpresa
           </h2>
           <p className="mt-4 text-[17px] leading-[1.6] text-muted">
-            Escolha pelo número de WhatsApps conectados. Todos os planos têm as mesmas funcionalidades.
+            Encontre o plano ideal para alavancar os resultados da sua equipe. Sem taxas surpresa, cancele quando
+            quiser.
+          </p>
+          <p className="mt-5 inline-flex items-center gap-1.5 rounded-md border border-accent-text/25 bg-accent-tint px-2.5 py-1 text-[13px] leading-5 font-medium sm:text-[14px] text-accent-hover dark:text-accent-text">
+            <IconInfoCircle size={15} stroke={2} aria-hidden="true" className="shrink-0" />
+            Todos os planos têm as mesmas funcionalidades.
           </p>
         </div>
 
