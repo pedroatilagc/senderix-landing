@@ -1,3 +1,4 @@
+import { AppTour } from '@/components/app-tour/AppTour'
 import { Footer } from '@/components/Footer'
 import { Hero } from '@/components/Hero'
 import { Nav } from '@/components/Nav'
@@ -9,6 +10,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <AppTour />
         <Pricing />
       </main>
       <Footer />

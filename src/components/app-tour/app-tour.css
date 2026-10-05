@@ -1,0 +1,187 @@
+/*
+ * Estilos da réplica do app (seção "Por dentro do Senderix").
+ * Tudo escopado em .app-tour-stage: os tokens são os do app (index.css do
+ * Senderix), não os da landing, e nada aqui vaza para o resto da página.
+ */
+
+.app-tour-stage {
+  --app-primary: #2563eb;
+  --app-primary-hover: #1d4ed8;
+  --xy-dots: #91919a;
+  --xy-edge: #b1b1b7;
+  --xy-bg: transparent;
+  --xy-label-bg: #ffffff;
+  --xy-controls-bg: #fefefe;
+  --xy-controls-border: #eeeeee;
+  --xy-controls-fg: #0f172a;
+  color: #0f172a;
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-color-scheme: dark) {
+  .app-tour-stage {
+    --app-primary: #3b82f6;
+    --app-primary-hover: #60a5fa;
+    --xy-dots: #555555;
+    --xy-edge: #3e3e3e;
+    --xy-bg: #141414;
+    --xy-label-bg: #141414;
+    --xy-controls-bg: #2b2b2b;
+    --xy-controls-border: #5b5b5b;
+    --xy-controls-fg: #f8f8f8;
+    color: #f8fafc;
+  }
+}
+
+/* Clique do cursor: o próprio elemento reage como no app (whileTap scale 0.97) */
+.app-tour-stage [data-tour] {
+  transition-property: transform, color, background-color, border-color, opacity, box-shadow;
+  transition-duration: 160ms;
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.app-tour-stage [data-pressed] {
+  transform: scale(0.97);
+}
+
+/* Caret do campo em digitação */
+.tour-caret {
+  display: inline-block;
+  width: 1px;
+  height: 1.15em;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background: currentColor;
+  animation: tour-caret 1s steps(1) infinite;
+}
+
+@keyframes tour-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Toasts: mesma curva e deslocamento do toastV do app */
+.tour-toast {
+  opacity: 0;
+  transform: translateX(72px) scale(0.95);
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
+}
+
+.tour-toast[data-on="true"] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 280ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Modal: backdrop do ModalWrapper + painel com o modalV do app */
+.tour-backdrop {
+  opacity: 0;
+  background: rgb(15 17 23 / 0.55);
+  transition: opacity 150ms ease;
+}
+
+.tour-backdrop[data-on="true"] {
+  opacity: 1;
+  backdrop-filter: blur(6px);
+  transition-duration: 200ms;
+}
+
+.tour-backdrop > * {
+  opacity: 0;
+  transform: translateY(8px) scale(0.95);
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
+}
+
+.tour-backdrop[data-on="true"] > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Painel lateral do editor: entra da direita (x 16 → 0, 150 ms) */
+.tour-painel {
+  animation: tour-painel 150ms ease-out;
+}
+
+@keyframes tour-painel {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
+
+/* Linha nova numa tabela (staggerItem do app) */
+.tour-entra {
+  animation: tour-entra 300ms ease-out;
+}
+
+@keyframes tour-entra {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+/* Aresta sendo desenhada da saída até o bloco */
+.tour-traco {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.tour-traco[data-on="true"] {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset var(--dur, 500ms) cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Rolagem da área principal (o app rola com overflow; aqui, com transform) */
+.tour-rolagem {
+  transition: transform 650ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Barra de progresso cresce com scaleX, sem animar largura */
+.tour-barra {
+  transform-origin: left;
+  transition: transform 600ms ease-out;
+}
+
+/* Lista suspensa de <select> (popup do Chromium) */
+.tour-popup {
+  animation: tour-popup 120ms ease-out;
+}
+
+@keyframes tour-popup {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-caret,
+  .tour-painel,
+  .tour-entra,
+  .tour-popup {
+    animation: none;
+  }
+  .tour-toast,
+  .tour-toast[data-on="true"],
+  .tour-backdrop,
+  .tour-backdrop[data-on="true"],
+  .tour-backdrop > *,
+  .tour-backdrop[data-on="true"] > *,
+  .tour-traco[data-on="true"],
+  .tour-rolagem,
+  .tour-barra {
+    transition: none;
+  }
+}
