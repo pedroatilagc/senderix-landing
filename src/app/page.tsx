@@ -1,4 +1,5 @@
 import { AppTour } from '@/components/app-tour/AppTour'
+import { ConfirmacaoPagamento } from '@/components/ConfirmacaoPagamento'
 import { Footer } from '@/components/Footer'
 import { Hero } from '@/components/Hero'
 import { Nav } from '@/components/Nav'
@@ -14,6 +15,7 @@ export default function Home() {
         <Pricing />
       </main>
       <Footer />
+      <ConfirmacaoPagamento />
     </>
   )
 }
