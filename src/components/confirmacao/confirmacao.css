@@ -61,11 +61,65 @@
   pointer-events: none;
 }
 
-/* Check que se desenha logo depois que o modal entra */
+/* Círculo do ícone: trilho neutro enquanto verifica, borda de destaque no resultado */
+.confirmacao-icone {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  border: 1.5px solid var(--accent-text);
+  color: var(--accent-text);
+  transition: border-color 200ms ease;
+}
+
+.confirmacao-icone[data-estado="verificando"] {
+  border-color: var(--line-strong);
+}
+
+.confirmacao-giro {
+  position: absolute;
+  inset: -1.5px;
+  width: calc(100% + 3px);
+  height: calc(100% + 3px);
+  animation: confirmacao-girar 900ms linear infinite;
+}
+
+.confirmacao-icone-novo {
+  animation: confirmacao-icone-entrar 200ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+/* Check que se desenha logo depois que o resultado aparece */
 .confirmacao-check {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: confirmacao-traco 400ms cubic-bezier(0.65, 0, 0.35, 1) 220ms forwards;
+  animation: confirmacao-traco 400ms cubic-bezier(0.65, 0, 0.35, 1) 140ms forwards;
+}
+
+/* Altura acompanha o conteúdo. Margem negativa + padding dão folga para o anel de
+   foco dos botões não ser cortado pelo overflow. */
+.confirmacao-moldura {
+  position: relative;
+  overflow: hidden;
+  margin: 1.25rem -6px -6px;
+  padding: 0 6px 6px;
+  transition: height 280ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Crossfade entre estados: o novo entra no fluxo, o antigo some por cima */
+.confirmacao-entrando {
+  animation: confirmacao-conteudo-entrar 200ms ease-out both;
+}
+
+.confirmacao-saindo {
+  position: absolute;
+  top: 0;
+  right: 6px;
+  left: 6px;
+  pointer-events: none;
+  animation: confirmacao-sumir 150ms ease forwards;
 }
 
 /* Saída mais rápida que a entrada */
@@ -103,6 +157,26 @@
   }
 }
 
+@keyframes confirmacao-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes confirmacao-icone-entrar {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+@keyframes confirmacao-conteudo-entrar {
+  from {
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
 @keyframes confirmacao-traco {
   to {
     stroke-dashoffset: 0;
@@ -119,5 +193,18 @@
   .confirmacao-check {
     animation: none;
     stroke-dashoffset: 0;
+  }
+  /* Sem anel girando: só o texto diz que está verificando */
+  .confirmacao-giro,
+  .confirmacao-saindo {
+    display: none;
+  }
+  .confirmacao-icone,
+  .confirmacao-moldura {
+    transition: none;
+  }
+  .confirmacao-icone-novo,
+  .confirmacao-entrando {
+    animation: none;
   }
 }
